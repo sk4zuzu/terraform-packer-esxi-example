@@ -1,0 +1,44 @@
+
+SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+
+ARTIFACT    ?= VMware-ovftool-4.3.0-13981069-lin.x86_64.bundle
+INTERPRETER ?= $(shell patchelf --print-interpreter $(shell which patchelf))
+
+HOST_UID ?= $(shell id -u)
+HOST_GID ?= $(shell id -g)
+
+_GOPATH_ ?= $(HOME)/go
+
+define Dockerfile
+FROM ubuntu:18.04
+
+COPY downloads/$(ARTIFACT) /tmp/installer.sh
+
+RUN chmod +x /tmp/installer.sh && /tmp/installer.sh --eulas-agreed
+
+ENTRYPOINT []
+CMD cp -R /usr/lib/vmware-ovftool/* /ovftool/ \
+ && exec chown -R $(HOST_UID):$(HOST_GID) /ovftool/
+endef
+
+export
+
+.PHONY: all relocate extract clean
+
+all: $(_GOPATH_)/bin/ovftool
+
+$(_GOPATH_)/bin/ovftool: relocate
+	ln -s $(SELF)/ovftool/ovftool $@
+
+relocate: extract
+	sed -i "1s:#!/bin/bash:#!/usr/bin/env bash:" $(SELF)/ovftool/ovftool \
+	&& patchelf --set-interpreter $(INTERPRETER) $(SELF)/ovftool/ovftool.bin
+
+extract:
+	docker build -t ovftool-extractor -f- $(SELF)/ <<< "$$Dockerfile" \
+	&& docker run -v $(SELF)/ovftool/:/ovftool/ --rm -t ovftool-extractor
+
+clean:
+	-rm -rf $(_GOPATH_)/bin/ovftool $(SELF)/ovftool/
+
+# vim:ts=4:sw=4:noet:syn=make:

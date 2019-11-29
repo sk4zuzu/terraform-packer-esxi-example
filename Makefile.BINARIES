@@ -1,0 +1,44 @@
+
+SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+
+PACKER_VERSION    ?= 1.4.5
+TERRAFORM_VERSION ?= 0.12.13
+
+_GOPATH_ ?= $(HOME)/go
+
+TARGETS := \
+$(_GOPATH_)/bin/packer \
+$(_GOPATH_)/bin/terraform
+
+define hashicorp_release_install
+.PHONY: $(_GOPATH_)/bin/$(1)
+
+$(_GOPATH_)/bin/$(1): $(_GOPATH_)/bin/$(1)-$(2)
+	rm -f $$@ && ln -s $$< $$@
+
+$(_GOPATH_)/bin/$(1)-$(2):
+	install -d /tmp/$(1)-$(2)/ \
+	&& curl -fSL https://releases.hashicorp.com/$(1)/$(2)/$(1)_$(2)_linux_amd64.zip \
+	        -o /tmp/$(1)-$(2)/download.zip \
+	&& unzip -o -d /tmp/$(1)-$(2)/ /tmp/$(1)-$(2)/download.zip \
+	&& mv /tmp/$(1)-$(2)/$(1)* $$@ \
+	&& rm -rf /tmp/$(1)-$(2)/ \
+	&& chmod +x $$@
+endef
+
+export
+
+.PHONY: all clean
+
+all: $(TARGETS)
+
+clean:
+	-rm -f $(TARGETS)
+
+$(eval \
+	$(call hashicorp_release_install,packer,$(PACKER_VERSION)))
+
+$(eval \
+	$(call hashicorp_release_install,terraform,$(TERRAFORM_VERSION)))
+
+# vim:ts=4:sw=4:noet:syn=make:
