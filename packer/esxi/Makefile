@@ -1,5 +1,5 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SHELL := $(shell which bash)
+SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 ARTIFACT ?= VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso
 CHECKSUM ?= fcbaa4cd952abd9e629fb131b8f46a949844405d8976372e7e5b55917623fbe0
@@ -61,5 +61,3 @@ output/packer-esxi.qcow2: Makefile
 
 clean:
 	-rm -rf $(SELF)/output/
-
-# vim:ts=4:sw=4:noet:

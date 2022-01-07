@@ -1,4 +1,3 @@
-
 TERRAFORM-PACKER-ESXI-EXAMPLE
 =============================
 
@@ -596,7 +595,3 @@ root@ubuntuguest:~# dmesg | grep VMware
 [   10.006694] vmw_pvscsi 0000:03:00.0: VMware PVSCSI rev 2 host #2
 [   10.055485] scsi 2:0:0:0: Direct-Access     VMware   Virtual disk     1.0  PQ: 0 ANSI: 2
 ```
-
-## 6. THINK AGAIN... xD
-
-[//]: # ( vim:set ts=2 sw=2 et syn=markdown: )

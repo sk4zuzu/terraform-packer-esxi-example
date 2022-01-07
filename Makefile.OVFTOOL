@@ -1,5 +1,5 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SHELL := $(shell which bash)
+SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 ARTIFACT    ?= VMware-ovftool-4.3.0-13981069-lin.x86_64.bundle
 INTERPRETER ?= $(shell patchelf --print-interpreter $(shell which patchelf))
@@ -40,5 +40,3 @@ extract:
 
 clean:
 	-rm -rf $(_GOPATH_)/bin/ovftool $(SELF)/ovftool/
-
-# vim:ts=4:sw=4:noet:syn=make:

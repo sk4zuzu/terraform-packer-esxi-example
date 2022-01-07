@@ -1,5 +1,5 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SHELL := $(shell which bash)
+SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 export
 
@@ -47,5 +47,3 @@ clean:
 	-make clean -f $(SELF)/Makefile.EXTRAS
 	-make clean -f $(SELF)/Makefile.OVFTOOL
 	-cd $(SELF)/packer/esxi/ && make clean
-
-# vim:ts=4:sw=4:noet:

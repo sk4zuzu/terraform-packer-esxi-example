@@ -1,4 +1,3 @@
-
 terraform {
   required_version = ">= 0.12"
 }
@@ -122,5 +121,3 @@ resource "libvirt_domain" "esxi" {
     xslt = local.xslt
   }
 }
-
-# vim:ts=2:sw=2:et:

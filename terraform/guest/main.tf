@@ -1,4 +1,3 @@
-
 terraform {
   required_version = ">= 0.12"
 }
@@ -101,5 +100,3 @@ resource "esxi_guest" "guest" {
 output "ipv4" {
   value = esxi_guest.guest.ip_address
 }
-
-# vim:ts=2:sw=2:et:

@@ -12,5 +12,3 @@ stdenv.mkDerivation {
     patchelf
   ];
 }
-
-# vim:ts=2:sw=2:et:syn=nix:

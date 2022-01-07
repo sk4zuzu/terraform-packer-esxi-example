@@ -1,5 +1,5 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SHELL := $(shell which bash)
+SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 TERRAFORM_PROVIDER_LIBVIRT_VERSION ?= 0.6.0
 TERRAFORM_PROVIDER_ESXI_VERSION    ?= 1.6.0
@@ -52,5 +52,3 @@ $(eval \
 
 $(eval \
 	$(call github_release_install,josenk,terraform-provider-esxi,$(TERRAFORM_PROVIDER_ESXI_VERSION)))
-
-# vim:ts=4:sw=4:noet:syn=make:
