@@ -20,7 +20,7 @@ variable "memory" {
 
 variable "pool_directory" {
   type    = string
-  default = "/stor/esxi"
+  default = "/stor/libvirt/esxi"
 }
 
 variable "artifact" {
