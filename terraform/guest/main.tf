@@ -1,44 +1,50 @@
 terraform {
-  required_version = ">= 0.12"
+  required_version = "1.1.3"
+  required_providers {
+    esxi = {
+      source = "josenk/esxi"
+      version = "1.10.0"
+    }
+  }
 }
 
 variable "esxi_hostname" {
-  type    = "string"
+  type    = string
   default = "10.11.12.69"
 }
 
 variable "esxi_hostport" {
-  type    = "string"
+  type    = string
   default = "22"
 }
 
 variable "esxi_username" {
-  type    = "string"
+  type    = string
   default = "root"
 }
 
 variable "esxi_password" {
-  type    = "string"
+  type    = string
   default = "asd123X"
 }
 
 variable "guest_name" {
-  type    = "string"
+  type    = string
   default = "guest"
 }
 
 variable "disk_store" {
-  type    = "string"
+  type    = string
   default = "datastore1"
 }
 
 variable "virtual_network" {
-  type    = "string"
+  type    = string
   default = "VM Network"
 }
 
 variable "artifact" {
-  type    = "string"
+  type    = string
   default = "./../../downloads/bionic-server-cloudimg-amd64.ova"
 }
 
@@ -49,7 +55,7 @@ locals {
   users:
     - name: "ubuntu"
       ssh_authorized_keys:
-        - "${chomp(file("~/.ssh/id_ed25519.pub"))}"
+        - "${chomp(file("~/.ssh/id_rsa.pub"))}"
       sudo:
         - "ALL=(ALL) NOPASSWD:ALL"
       groups:
@@ -57,7 +63,7 @@ locals {
       shell: "/bin/bash"
     - name: "root"
       ssh_authorized_keys:
-        - "${chomp(file("~/.ssh/id_ed25519.pub"))}"
+        - "${chomp(file("~/.ssh/id_rsa.pub"))}"
       shell: "/bin/bash"
   chpasswd:
     list:
