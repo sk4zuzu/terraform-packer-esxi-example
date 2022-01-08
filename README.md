@@ -9,9 +9,9 @@ Just a devops exercise.
 
 ```shell
 ~/_git/terraform-packer-esxi-example/files$ ls -1
-bionic-server-cloudimg-amd64.ova
+hirsute-server-cloudimg-amd64.ova
 VMware-ovftool-4.3.0-15755677-lin.x86_64.bundle
-VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso
+VMware-VMvisor-Installer-7.0U3c-19035710.x86_64.iso
 ```
 
 ## 3. INSTALL PACKER, TERRAFORM AND OVFTOOL
@@ -77,26 +77,26 @@ if ! [[ -e /stor/asd/_git/terraform-packer-esxi-example/packer/esxi/.cache/build
 qemu.esxi: output will be in this color.
 
 ==> qemu.esxi: Retrieving ISO
-==> qemu.esxi: Trying file:///stor/asd/_git/terraform-packer-esxi-example/packer/esxi/../../files/VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso
-==> qemu.esxi: Trying file:///stor/asd/_git/terraform-packer-esxi-example/packer/esxi/../../files/VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso?checksum=sha256%3Afcbaa4cd952abd9e629fb131b8f46a949844405d8976372e7e5b55917623fbe0
-==> qemu.esxi: file:///stor/asd/_git/terraform-packer-esxi-example/packer/esxi/../../files/VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso?checksum=sha256%3Afcbaa4cd952abd9e629fb131b8f46a949844405d8976372e7e5b55917623fbe0 => /stor/asd/_git/terraform-packer-esxi-example/files/VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso
-==> qemu.esxi: Starting HTTP server on port 8087
+==> qemu.esxi: Trying file:///stor/asd/_git/terraform-packer-esxi-example/packer/esxi/../../files/VMware-VMvisor-Installer-7.0U3c-19035710.x86_64.iso
+==> qemu.esxi: Trying file:///stor/asd/_git/terraform-packer-esxi-example/packer/esxi/../../files/VMware-VMvisor-Installer-7.0U3c-19035710.x86_64.iso?checksum=sha256%3Aad8ad131009588e0f1b7f52019b0978d36374eabce763311d7af09b6df0ff005
+==> qemu.esxi: file:///stor/asd/_git/terraform-packer-esxi-example/packer/esxi/../../files/VMware-VMvisor-Installer-7.0U3c-19035710.x86_64.iso?checksum=sha256%3Aad8ad131009588e0f1b7f52019b0978d36374eabce763311d7af09b6df0ff005 => /stor/asd/_git/terraform-packer-esxi-example/files/VMware-VMvisor-Installer-7.0U3c-19035710.x86_64.iso
+==> qemu.esxi: Starting HTTP server on port 8881
     qemu.esxi: No communicator is set; skipping port forwarding setup.
 ==> qemu.esxi: Looking for available port between 5900 and 6000 on 127.0.0.1
 ==> qemu.esxi: Starting VM, booting from CD-ROM
     qemu.esxi: The VM will be run headless, without a GUI. If you want to
     qemu.esxi: view the screen of the VM, connect via VNC without a password to
-    qemu.esxi: vnc://127.0.0.1:5940
+    qemu.esxi: vnc://127.0.0.1:5954
 ==> qemu.esxi: Overriding default Qemu arguments with qemuargs template option...
 ==> qemu.esxi: Waiting 10s for boot...
-==> qemu.esxi: Connecting to VM via VNC (127.0.0.1:5940)
+==> qemu.esxi: Connecting to VM via VNC (127.0.0.1:5954)
 ==> qemu.esxi: Typing the boot command over VNC...
     qemu.esxi: No communicator is configured -- skipping StepWaitGuestAddress
 ==> qemu.esxi: Waiting for shutdown...
 ==> qemu.esxi: Converting hard drive...
-Build 'qemu.esxi' finished after 3 minutes 7 seconds.
+Build 'qemu.esxi' finished after 6 minutes 25 seconds.
 
-==> Wait completed after 3 minutes 7 seconds
+==> Wait completed after 6 minutes 25 seconds
 
 ==> Builds finished. The artifacts of successful builds are:
 --> qemu.esxi: VM files in directory: /stor/asd/_git/terraform-packer-esxi-example/packer/esxi/.cache/output/
@@ -248,7 +248,7 @@ Terraform will perform the following actions:
       + capacity   = (known after apply)
       + id         = (known after apply)
       + name       = "esxi"
-      + path       = "/stor/esxi"
+      + path       = "/stor/libvirt/esxi"
       + type       = "dir"
     }
 
@@ -271,12 +271,12 @@ Do you want to perform these actions?
   Enter a value: yes
 libvirt_pool.esxi: Creating...
 libvirt_network.esxi: Creating...
-libvirt_pool.esxi: Creation complete after 6s [id=75c66e20-d549-4ab3-8cd4-82c71eae41ea]
+libvirt_pool.esxi: Creation complete after 5s [id=c55050e0-767d-40d7-891b-a4feef66a650]
 libvirt_volume.esxi: Creating...
-libvirt_network.esxi: Creation complete after 6s [id=3dccca32-351b-452d-ad20-efa033587e24]
-libvirt_volume.esxi: Creation complete after 0s [id=/stor/esxi/esxi]
+libvirt_network.esxi: Creation complete after 5s [id=730b2568-7e68-4b86-b924-3516e5a89085]
+libvirt_volume.esxi: Creation complete after 1s [id=/stor/libvirt/esxi/esxi]
 libvirt_domain.esxi: Creating...
-libvirt_domain.esxi: Creation complete after 1s [id=f766df7b-dd00-4ced-bcf4-4bf8a8ebafaa]
+libvirt_domain.esxi: Creation complete after 0s [id=52ca6902-621b-4e6a-9ec3-1792a90bc209]
 
 Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
 for RETRY in {1..69}; do \
@@ -335,7 +335,7 @@ Terraform will perform the following actions:
       + notes                  = (known after apply)
       + numvcpus               = (known after apply)
       + ovf_properties_timer   = 180
-      + ovf_source             = "./../../files/bionic-server-cloudimg-amd64.ova"
+      + ovf_source             = "./../../files/hirsute-server-cloudimg-amd64.ova"
       + power                  = (known after apply)
       + resource_pool_name     = "/"
       + virthwver              = (known after apply)
@@ -393,35 +393,40 @@ esxi_guest.guest: Still creating... [4m30s elapsed]
 esxi_guest.guest: Still creating... [4m40s elapsed]
 esxi_guest.guest: Still creating... [4m50s elapsed]
 esxi_guest.guest: Still creating... [5m0s elapsed]
-esxi_guest.guest: Creation complete after 5m6s [id=1]
+esxi_guest.guest: Still creating... [5m10s elapsed]
+esxi_guest.guest: Still creating... [5m20s elapsed]
+esxi_guest.guest: Still creating... [5m30s elapsed]
+esxi_guest.guest: Still creating... [5m40s elapsed]
+esxi_guest.guest: Still creating... [5m50s elapsed]
+esxi_guest.guest: Creation complete after 5m51s [id=1]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 Outputs:
 
-ipv4 = "10.11.12.214"
+ipv4 = "10.11.12.87"
 ```
 
 ## 5. LOGIN INTO ESXI GUEST VM
 
 ```shell
-~/_git/terraform-packer-esxi-example$ ssh root@10.11.12.214
-The authenticity of host '10.11.12.214 (10.11.12.214)' can't be established.
-ED25519 key fingerprint is SHA256:zrQX1hdnZwXPtucDqI922ZEViLmFYLZLqJ1RCOA5CHM.
+~/_git/terraform-packer-esxi-example$ ssh root@10.11.12.87
+The authenticity of host '10.11.12.87 (10.11.12.87)' can't be established.
+ED25519 key fingerprint is SHA256:gFXv9GhXCAs9mrSw7lZe8+N0pMRq38idIZie1hvgX9g.
 This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '10.11.12.214' (ED25519) to the list of known hosts.
-Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-166-generic x86_64)
+Warning: Permanently added '10.11.12.87' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 21.04 (GNU/Linux 5.11.0-44-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
 
-  System information as of Sat Jan  8 18:45:04 UTC 2022
+  System information as of Sat Jan  8 20:35:52 UTC 2022
 
-  System load:  0.11              Processes:             102
-  Usage of /:   11.1% of 9.52GB   Users logged in:       0
-  Memory usage: 13%               IP address for ens192: 10.11.12.214
+  System load:  0.47              Processes:               140
+  Usage of /:   13.8% of 9.52GB   Users logged in:         0
+  Memory usage: 18%               IPv4 address for ens192: 10.11.12.87
   Swap usage:   0%
 
 0 updates can be applied immediately.
@@ -436,15 +441,15 @@ Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
 applicable law.
 
 root@ubuntuguest:~# dmesg | grep VMware
-[    0.000000] DMI: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 12/12/2018
+[    0.000000] DMI: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
 [    0.000000] Hypervisor detected: VMware
-[    0.000000] Booting paravirtualized kernel on VMware hypervisor
-[    3.984665] ata2.00: ATAPI: VMware Virtual IDE CDROM Drive, 00000001, max UDMA/33
-[    4.039994] scsi 1:0:0:0: CD-ROM            NECVMWar VMware IDE CDR10 1.00 PQ: 0 ANSI: 5
-[    4.473711] VMware PVSCSI driver - version 1.0.7.0-k
-[    4.524319] scsi host2: VMware PVSCSI storage adapter rev 2, req/cmp/msg rings: 8/8/1 pages, cmd_per_lun=254
-[    4.548208] vmw_pvscsi 0000:03:00.0: VMware PVSCSI rev 2 host #2
-[    4.556268] input: VirtualPS/2 VMware VMMouse as /devices/platform/i8042/serio1/input/input4
-[    4.575129] scsi 2:0:0:0: Direct-Access     VMware   Virtual disk     1.0  PQ: 0 ANSI: 2
-[    4.577644] input: VirtualPS/2 VMware VMMouse as /devices/platform/i8042/serio1/input/input3
+[    0.046303] Booting paravirtualized kernel on VMware hypervisor
+[    8.660007] ata2.00: ATAPI: VMware Virtual IDE CDROM Drive, 00000001, max UDMA/33
+[    8.688358] scsi 1:0:0:0: CD-ROM            NECVMWar VMware IDE CDR10 1.00 PQ: 0 ANSI: 5
+[    9.711137] VMware PVSCSI driver - version 1.0.7.0-k
+[    9.775797] scsi host2: VMware PVSCSI storage adapter rev 2, req/cmp/msg rings: 8/8/1 pages, cmd_per_lun=254
+[    9.814227] input: VirtualPS/2 VMware VMMouse as /devices/platform/i8042/serio1/input/input4
+[    9.851602] input: VirtualPS/2 VMware VMMouse as /devices/platform/i8042/serio1/input/input3
+[    9.941600] vmw_pvscsi 0000:03:00.0: VMware PVSCSI rev 2 host #2
+[    9.989601] scsi 2:0:0:0: Direct-Access     VMware   Virtual disk     1.0  PQ: 0 ANSI: 2
 ```
