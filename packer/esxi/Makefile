@@ -3,12 +3,12 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := esxi
 
-ARTIFACT ?= VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso
-CHECKSUM ?= fcbaa4cd952abd9e629fb131b8f46a949844405d8976372e7e5b55917623fbe0
+ARTIFACT ?= VMware-VMvisor-Installer-7.0U3c-19035710.x86_64.iso
+CHECKSUM ?= ad8ad131009588e0f1b7f52019b0978d36374eabce763311d7af09b6df0ff005
 
 CPUS      ?= 2
 MEMORY    ?= 4096
-DISK_SIZE ?= 70656
+DISK_SIZE ?= 143360
 
 PACKER     := $(SELF)/../../bin/packer
 PACKER_LOG ?= 1
@@ -38,6 +38,8 @@ source "qemu" "$(NAME)" {
 	"<leftShiftOn>O<leftShiftOff>",
 	"<wait1s><spacebar>ks=http://{{.HTTPIP}}:{{.HTTPPort}}/esxi-ks.cfg<enter>",
   ]
+
+  shutdown_timeout = "10m"
 
   output_directory = "$(SELF)/.cache/output/"
   format           = "qcow2"
