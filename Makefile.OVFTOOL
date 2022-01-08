@@ -10,7 +10,7 @@ HOST_GID ?= $(shell id -g)
 define DOCKERFILE
 FROM ubuntu:18.04
 
-COPY downloads/$(ARTIFACT) /tmp/installer.sh
+COPY /files/$(ARTIFACT) /tmp/installer.sh
 
 RUN chmod +x /tmp/installer.sh && /tmp/installer.sh --eulas-agreed
 

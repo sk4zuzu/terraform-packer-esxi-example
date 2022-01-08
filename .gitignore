@@ -9,5 +9,5 @@
 /bin/*
 !/bin/.gitkeep
 
-/downloads/*
-!/downloads/.gitkeep
+/files/*
+!/files/.gitkeep

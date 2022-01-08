@@ -18,7 +18,7 @@ define PACKERFILE
 source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
-  iso_url      = "file://$(SELF)/../../downloads/$(ARTIFACT)"
+  iso_url      = "file://$(SELF)/../../files/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   cpus      = "$(CPUS)"

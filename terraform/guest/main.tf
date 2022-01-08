@@ -45,7 +45,7 @@ variable "virtual_network" {
 
 variable "artifact" {
   type    = string
-  default = "./../../downloads/bionic-server-cloudimg-amd64.ova"
+  default = "./../../files/bionic-server-cloudimg-amd64.ova"
 }
 
 locals {
