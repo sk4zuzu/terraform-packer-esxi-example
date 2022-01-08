@@ -1,5 +1,13 @@
 *.swp
 *.swo
-/downloads/VMware-*
-/downloads/*.ova
+
+.terraform/
+.terraform.lock.hcl
+
 /ovftool/
+
+/bin/*
+!/bin/.gitkeep
+
+/downloads/*
+!/downloads/.gitkeep

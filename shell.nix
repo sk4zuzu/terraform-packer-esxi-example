@@ -5,10 +5,11 @@ with pkgs;
 stdenv.mkDerivation {
   name = "terraform-packer-esxi-example-env";
   buildInputs = [
+    curl
     git
-    libvirt libxslt
-    pkgconfig gnumake
-    go gcc
+    gnumake
+    libxslt
     patchelf
+    unzip
   ];
 }

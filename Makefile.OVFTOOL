@@ -7,9 +7,7 @@ INTERPRETER ?= $(shell patchelf --print-interpreter $(shell which patchelf))
 HOST_UID ?= $(shell id -u)
 HOST_GID ?= $(shell id -g)
 
-_GOPATH_ ?= $(HOME)/go
-
-define Dockerfile
+define DOCKERFILE
 FROM ubuntu:18.04
 
 COPY downloads/$(ARTIFACT) /tmp/installer.sh
@@ -25,18 +23,19 @@ export
 
 .PHONY: all relocate extract clean
 
-all: $(_GOPATH_)/bin/ovftool
+all: $(SELF)/bin/ovftool
 
-$(_GOPATH_)/bin/ovftool: relocate
+$(SELF)/bin/ovftool: relocate
+	-rm $@
 	ln -s $(SELF)/ovftool/ovftool $@
 
 relocate: extract
-	sed -i "1s:#!/bin/bash:#!/usr/bin/env bash:" $(SELF)/ovftool/ovftool \
-	&& patchelf --set-interpreter $(INTERPRETER) $(SELF)/ovftool/ovftool.bin
+	sed -i "1s:#!/bin/bash:#!/usr/bin/env bash:" $(SELF)/ovftool/ovftool
+	patchelf --set-interpreter $(INTERPRETER) $(SELF)/ovftool/ovftool.bin
 
 extract:
-	docker build -t ovftool-extractor -f- $(SELF)/ <<< "$$Dockerfile" \
-	&& docker run -v $(SELF)/ovftool/:/ovftool/ --rm -t ovftool-extractor
+	docker build -t ovftool-extractor -f- $(SELF)/ <<< "$$DOCKERFILE"
+	docker run -v $(SELF)/ovftool/:/ovftool/ --rm -t ovftool-extractor
 
 clean:
-	-rm -rf $(_GOPATH_)/bin/ovftool $(SELF)/ovftool/
+	-rm -rf $(SELF)/bin/ovftool $(SELF)/ovftool/
