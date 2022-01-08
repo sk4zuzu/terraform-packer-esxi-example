@@ -10,27 +10,27 @@ Just a devops exercise.
 ```shell
 ~/_git/terraform-packer-esxi-example/files$ ls -1
 bionic-server-cloudimg-amd64.ova
-VMware-ovftool-4.3.0-13981069-lin.x86_64.bundle
+VMware-ovftool-4.3.0-15755677-lin.x86_64.bundle
 VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso
 ```
 
 ## 3. INSTALL PACKER, TERRAFORM AND OVFTOOL
 
 ```shell
-~/_git/terraform-packer-esxi-example$ nix-shell --run "make requirements"
+~/_git/terraform-packer-esxi-example$ nix-shell --run 'make requirements'
 make -f /stor/asd/_git/terraform-packer-esxi-example/Makefile.BINARIES
 make[1]: Entering directory '/stor/asd/_git/terraform-packer-esxi-example'
 install -d /tmp/packer-1.7.8/ && curl -fSL https://releases.hashicorp.com/packer/1.7.8/packer_1.7.8_linux_amd64.zip -o /tmp/packer-1.7.8/download.zip && unzip -o -d /tmp/packer-1.7.8/ /tmp/packer-1.7.8/download.zip && mv /tmp/packer-1.7.8/packer* /stor/asd/_git/terraform-packer-esxi-example/bin/packer-1.7.8 && rm -rf /tmp/packer-1.7.8/ && chmod +x /stor/asd/_git/terraform-packer-esxi-example/bin/packer-1.7.8
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 30.3M  100 30.3M    0     0  2244k      0  0:00:13  0:00:13 --:--:-- 2433k
+100 30.3M  100 30.3M    0     0  2189k      0  0:00:14  0:00:14 --:--:-- 2220k
 Archive:  /tmp/packer-1.7.8/download.zip
   inflating: /tmp/packer-1.7.8/packer
 rm -f /stor/asd/_git/terraform-packer-esxi-example/bin/packer && ln -s /stor/asd/_git/terraform-packer-esxi-example/bin/packer-1.7.8 /stor/asd/_git/terraform-packer-esxi-example/bin/packer
 install -d /tmp/terraform-1.1.3/ && curl -fSL https://releases.hashicorp.com/terraform/1.1.3/terraform_1.1.3_linux_amd64.zip -o /tmp/terraform-1.1.3/download.zip && unzip -o -d /tmp/terraform-1.1.3/ /tmp/terraform-1.1.3/download.zip && mv /tmp/terraform-1.1.3/terraform* /stor/asd/_git/terraform-packer-esxi-example/bin/terraform-1.1.3 && rm -rf /tmp/terraform-1.1.3/ && chmod +x /stor/asd/_git/terraform-packer-esxi-example/bin/terraform-1.1.3
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 17.8M  100 17.8M    0     0  2376k      0  0:00:07  0:00:07 --:--:-- 2438k
+100 17.8M  100 17.8M    0     0  2086k      0  0:00:08  0:00:08 --:--:-- 2060k
 Archive:  /tmp/terraform-1.1.3/download.zip
   inflating: /tmp/terraform-1.1.3/terraform
 rm -f /stor/asd/_git/terraform-packer-esxi-example/bin/terraform && ln -s /stor/asd/_git/terraform-packer-esxi-example/bin/terraform-1.1.3 /stor/asd/_git/terraform-packer-esxi-example/bin/terraform
@@ -38,22 +38,22 @@ make[1]: Leaving directory '/stor/asd/_git/terraform-packer-esxi-example'
 make -f /stor/asd/_git/terraform-packer-esxi-example/Makefile.OVFTOOL
 make[1]: Entering directory '/stor/asd/_git/terraform-packer-esxi-example'
 docker build -t ovftool-extractor -f- /stor/asd/_git/terraform-packer-esxi-example/ <<< "$DOCKERFILE"
-Sending build context to Docker daemon  2.024GB
+Sending build context to Docker daemon  2.462GB
 Step 1/5 : FROM ubuntu:18.04
  ---> 886eca19e611
-Step 2/5 : COPY /files/VMware-ovftool-4.3.0-13981069-lin.x86_64.bundle /tmp/installer.sh
+Step 2/5 : COPY /files/VMware-ovftool-4.3.0-15755677-lin.x86_64.bundle /tmp/installer.sh
  ---> Using cache
- ---> fdc6774682fe
+ ---> e6eac9653336
 Step 3/5 : RUN chmod +x /tmp/installer.sh && /tmp/installer.sh --eulas-agreed
  ---> Using cache
- ---> 5788d404adf1
+ ---> 83bb50e0ffa8
 Step 4/5 : ENTRYPOINT []
  ---> Using cache
- ---> 89223f1a3416
+ ---> 779d2292cd93
 Step 5/5 : CMD cp -R /usr/lib/vmware-ovftool/* /ovftool/ && exec chown -R 1000:1 /ovftool/
  ---> Using cache
- ---> 4aeb28d40459
-Successfully built 4aeb28d40459
+ ---> 1639842b1b39
+Successfully built 1639842b1b39
 Successfully tagged ovftool-extractor:latest
 docker run -v /stor/asd/_git/terraform-packer-esxi-example/ovftool/:/ovftool/ --rm -t ovftool-extractor
 sed -i "1s:#!/bin/bash:#!/usr/bin/env bash:" /stor/asd/_git/terraform-packer-esxi-example/ovftool/ovftool

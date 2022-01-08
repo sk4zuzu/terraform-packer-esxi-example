@@ -1,7 +1,7 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-ARTIFACT    ?= VMware-ovftool-4.3.0-13981069-lin.x86_64.bundle
+ARTIFACT    ?= VMware-ovftool-4.3.0-15755677-lin.x86_64.bundle
 INTERPRETER ?= $(shell patchelf --print-interpreter $(shell which patchelf))
 
 HOST_UID ?= $(shell id -u)
