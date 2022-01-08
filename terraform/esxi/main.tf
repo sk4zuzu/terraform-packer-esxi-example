@@ -1,25 +1,31 @@
 terraform {
-  required_version = ">= 0.12"
+  required_version = "1.1.3"
+  required_providers {
+    libvirt = {
+      source = "dmacvicar/libvirt"
+      version = "0.6.12"
+    }
+  }
 }
 
 variable "vcpu" {
-  type    = "string"
+  type    = string
   default = "2"
 }
 
 variable "memory" {
-  type    = "string"
+  type    = string
   default = "4096"
 }
 
 variable "pool_directory" {
-  type    = "string"
+  type    = string
   default = "/stor/esxi"
 }
 
 variable "artifact" {
-  type    = "string"
-  default = "./../../packer/esxi/output/packer-esxi.qcow2"
+  type    = string
+  default = "./../../packer/esxi/.cache/output/packer-esxi.qcow2"
 }
 
 locals {
@@ -86,7 +92,7 @@ resource "libvirt_domain" "esxi" {
   vcpu   = var.vcpu
   memory = var.memory
 
-  cpu = {
+  cpu {
     mode = "host-passthrough"
   }
 
